@@ -7,6 +7,8 @@ class ApiService {
 
   String? _token;
 
+  String? get token => _token;
+
   Future<void> loadToken() async {
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');

@@ -16,7 +16,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> checkAuth() async {
     await _apiService.loadToken();
-    if (_apiService._token != null) {
+    if (_apiService.token != null) {
       try {
         _user = await _apiService.getProfile();
         _isAuthenticated = true;
