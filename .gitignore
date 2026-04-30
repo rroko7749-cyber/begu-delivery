@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.log
+build/
+dist/
+.DS_Store
+*.apk
+*.aab
+.flutter-plugins
+.flutter-plugins-dependencies
+.dart_tool/
+.packages
+pubspec.lock

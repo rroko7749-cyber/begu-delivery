@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>DeliveryPro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            background: #fff;
+            padding: 30px 20px;
+            margin: -20px -20px 20px;
+        }
+
+        .logo {
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .button.green {
+            background: #34C759;
+        }
+
+        .button:active {
+            opacity: 0.8;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            margin: 10px 0;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-right: 15px;
+        }
+
+        .feature-text {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 15px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .install-prompt {
+            background: #FFF3CD;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .install-prompt button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="screen active" id="welcome">
+        <div class="header">
+            <div class="logo">📦</div>
+            <div class="title">DeliveryPro</div>
+            <div class="subtitle">Зарабатывай на доставках</div>
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">💰</span>
+            <span class="feature-text">Комиссия всего 15%</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">⚡</span>
+            <span class="feature-text">Быстрые выплаты</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">🗺️</span>
+            <span class="feature-text">Работай где удобно</span>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <button class="button" onclick="showScreen('client-home')">Я клиент</button>
+            <button class="button green" onclick="showScreen('courier-home')">Я курьер</button>
+        </div>
+
+        <div class="install-prompt" id="installPrompt" style="display: none;">
+            <p>📱 Установи приложение на главный экран</p>
+            <button onclick="installApp()">Установить</button>
+        </div>
+    </div>
+
+    <!-- Client Home -->
+    <div class="screen" id="client-home">
+        <div class="header">
+            <div class="title">Привет! 👋</div>
+            <div class="subtitle">Куда доставить?</div>
+        </div>
+
+        <button class="button" onclick="showScreen('create-order')">
+            📦 Создать заказ
+        </button>
+
+        <div class="card">
+            <h3>Активные заказы</h3>
+            <div style="text-align: center; padding: 40px 0;">
+                <div style="font-size: 48px;">📭</div>
+                <p style="color: #999; margin-top: 10px;">Нет активных заказов</p>
+            </div>
+        </div>
+
+        <button class="button" style="background: #ccc; color: #333;" onclick="showScreen('welcome')">
+            ← Назад
+        </button>
+    </div>
+
+    <!-- Create Order -->
+    <div class="screen" id="create-order">
+        <div class="header">
+            <div class="title">Создать заказ</div>
+        </div>
+
+        <div class="card">
+            <label>Откуда забрать? 📍</label>
+            <input type="text" class="input" placeholder="Адрес отправления">
+
+            <label style="margin-top: 20px;">Куда доставить? 🎯</label>
+            <input type="text" class="input" placeholder="Адрес доставки">
+
+            <label style="margin-top: 20px;">Описание груза</label>
+            <textarea class="input" rows="3" placeholder="Что нужно доставить?"></textarea>
+
+            <label style="margin-top: 20px;">Цена (необязательно)</label>
+            <input type="number" class="input" placeholder="Сумма в рублях">
+        </div>
+
+        <button class="button" onclick="alert('Заказ создан! Ищем курьера...'); showScreen('client-home')">
+            Создать заказ
+        </button>
+
+        <button class="button" style="background: #ccc; color: #333;" onclick="showScreen('client-home')">
+            ← Назад
+        </button>
+    </div>
+
+    <!-- Courier Home -->
+    <div class="screen" id="courier-home">
+        <div class="header">
+            <div class="title">Привет, курьер! 🚀</div>
+            <div class="subtitle">Готов к работе?</div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Статус</span>
+                <label style="display: flex; align-items: center;">
+                    <input type="checkbox" id="onlineToggle" onchange="toggleOnline()">
+                    <span style="margin-left: 10px;" id="statusText">Не в сети</span>
+                </label>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 28px; font-weight: bold; color: #34C759;">0 ₽</div>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">Заработано сегодня</div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 28px; font-weight: bold; color: #34C759;">0</div>
+                <div style="font-size: 12px; color: #666; margin-top: 5px;">Заказов выполнено</div>
+            </div>
+        </div>
+
+        <button class="button green" id="ordersBtn" onclick="showScreen('available-orders')" disabled>
+            📦 Доступные заказы
+        </button>
+
+        <div class="card" style="background: #FFF3CD;">
+            <strong>💡 Совет дня</strong>
+            <p style="margin-top: 10px; color: #666;">
+                Работайте в часы пик (12-14, 18-20) чтобы получать больше заказов
+            </p>
+        </div>
+
+        <button class="button" style="background: #ccc; color: #333;" onclick="showScreen('welcome')">
+            ← Назад
+        </button>
+    </div>
+
+    <!-- Available Orders -->
+    <div class="screen" id="available-orders">
+        <div class="header">
+            <div class="title">Доступные заказы</div>
+            <div class="subtitle">Выберите подходящий</div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <span style="background: #34C759; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold;">250 ₽</span>
+                <span style="color: #999; font-size: 12px;">5 мин назад</span>
+            </div>
+            <div style="margin: 15px 0;">
+                <div style="display: flex; align-items: center; margin: 5px 0;">
+                    <span style="font-size: 20px; margin-right: 10px;">📍</span>
+                    <span>ул. Ленина, 10</span>
+                </div>
+                <div style="margin: 5px 0 5px 30px; color: #999;">↓</div>
+                <div style="display: flex; align-items: center; margin: 5px 0;">
+                    <span style="font-size: 20px; margin-right: 10px;">🎯</span>
+                    <span>пр. Мира, 25</span>
+                </div>
+            </div>
+            <div style="color: #666; font-size: 14px;">
+                📏 3.2 км • 📦 Документы
+            </div>
+            <button class="button" style="margin-top: 15px;" onclick="alert('Заказ принят!'); showScreen('courier-home')">
+                Принять заказ
+            </button>
+        </div>
+
+        <button class="button" style="background: #ccc; color: #333;" onclick="showScreen('courier-home')">
+            ← Назад
+        </button>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function toggleOnline() {
+            const toggle = document.getElementById('onlineToggle');
+            const statusText = document.getElementById('statusText');
+            const ordersBtn = document.getElementById('ordersBtn');
+
+            if (toggle.checked) {
+                statusText.textContent = 'В сети';
+                statusText.style.color = '#34C759';
+                ordersBtn.disabled = false;
+            } else {
+                statusText.textContent = 'Не в сети';
+                statusText.style.color = '#999';
+                ordersBtn.disabled = true;
+            }
+        }
+
+        // PWA Install
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').style.display = 'block';
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('installPrompt').style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // Service Worker для оффлайн работы
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+name: begu_delivery_courier
+description: БегуДоставка - приложение для курьеров
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
+
+  # State Management
+  provider: ^6.1.1
+
+  # Network
+  http: ^1.1.2
+  dio: ^5.4.0
+
+  # Storage
+  shared_preferences: ^2.2.2
+
+  # Maps & Location
+  yandex_mapkit: ^4.0.0
+  geolocator: ^10.1.0
+  permission_handler: ^11.1.0
+
+  # Push Notifications
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.9
+
+  # Utils
+  intl: ^0.18.1
+  url_launcher: ^6.2.2
+  image_picker: ^1.0.5
+
+  # Background location
+  background_location: ^0.13.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
